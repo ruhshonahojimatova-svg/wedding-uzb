@@ -3,576 +3,778 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мухаммадазиз & Рухшона — Свадебное приглашение</title>
+    <title>TANTANALI TAKLIFNOMA</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
+        /* Базовые настройки */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
+
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: #fdfbfa;
-            color: #333;
+            background-color: #f6f5f1;
+            color: #4a3b32;
             overflow-x: hidden;
-            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Кнопки переключения языка и музыки верхнего уровня */
-        .top-controls {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 2000;
-        }
-        .music-btn {
-            width: 40px;
-            height: 40px;
-            background: #f5eedf;
-            border: 1px solid #dcd1ba;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            font-size: 1.2rem;
-            transition: transform 0.2s;
-        }
-        .music-btn:hover { transform: scale(1.05); }
-        .lang-switch {
-            display: flex;
-            background: #ffffff;
-            border: 1px solid #e0d8c3;
-            border-radius: 20px;
-            padding: 2px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-        .lang-btn {
-            padding: 6px 14px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            text-transform: uppercase;
-            border-radius: 18px;
-            color: #8c8275;
-            transition: all 0.3s;
-        }
-        .lang-btn.active {
-            background: #bc9c6c;
-            color: #ffffff;
-        }
-
-        /* Стилизация Бордового Конверта */
-        .envelope-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #80152B; /* Глубокий бордовый цвет */
+        .flex-center {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 1500;
-            transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1), opacity 1s;
         }
-        
-        /* Тонкие золотые линии, имитирующие геометрию конверта */
-        .envelope-lines {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
+
+        /* КНОПКИ ЗВУКА И ЯЗЫКА */
+        .top-controls {
+            position: fixed;
+            top: 15px;
             left: 0;
-            pointer-events: none;
-        }
-        .envelope-lines::before, .envelope-lines::after {
-            content: '';
-            position: absolute;
             width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #dfc493, transparent);
-        }
-        .envelope-lines::before { top: 0; transform: translateY(50vh) rotate(15deg) scaleX(1.5); }
-        .envelope-lines::after { top: 0; transform: translateY(50vh) rotate(-15deg) scaleX(1.5); }
-
-        .envelope-title-area {
-            text-align: center;
-            color: #ffffff;
-            z-index: 10;
-            margin-bottom: 40px;
-            padding: 0 20px;
-        }
-        .envelope-title-area h1 {
-            font-size: 2rem;
-            font-weight: 400;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            margin-bottom: 5px;
-        }
-        .envelope-title-area p {
-            font-family: 'Great Vibes', cursive;
-            font-size: 2.2rem;
-            color: #dfc493;
-        }
-
-        /* Реалистичная сургучная печать */
-        .seal-container {
-            position: relative;
-            z-index: 20;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-        .seal-container:hover { transform: scale(1.08); }
-        .wax-seal {
-            width: 100px;
-            height: 100px;
-            background: radial-gradient(circle, #d4af37 20%, #aa8010 80%);
-            border-radius: 50%;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4), inset 0 2px 5px rgba(255,255,255,0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 4px solid #b89326;
-        }
-        .seal-text {
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 2px;
-            color: #4a3300;
-            text-shadow: 1px 1px 1px rgba(255,255,255,0.2);
-            text-transform: uppercase;
-        }
-
-        .envelope-footer {
-            position: absolute;
-            bottom: 40px;
-            text-align: center;
-            color: #e2d2be;
-            font-size: 0.85rem;
-            z-index: 10;
-        }
-        .envelope-footer span {
-            font-style: italic;
-            display: block;
-            margin-bottom: 5px;
-            color: #dfc493;
-        }
-
-        /* Внутреннее содержимое страницы */
-        .main-container {
-            max-width: 650px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 80px 20px 40px;
-            text-align: center;
-            box-sizing: border-box;
-        }
-
-        /* Узбекский национальный орнамент (Гранаты) */
-        .pattern-divider {
-            width: 100%;
-            height: 60px;
-            background-image: url('https://img.icons8.com/color/96/pomegranate.png'); /* Использование иконки граната как паттерн */
-            background-repeat: space;
-            background-size: contain;
-            opacity: 0.15;
-            margin: 20px 0;
-        }
-        
-        /* Кастомный элемент верхней графики */
-        .top-pattern {
-            width: 100%;
-            max-width: 450px;
-            height: 120px;
-            margin: 0 auto 20px;
-            background: linear-gradient(rgba(128, 21, 43, 0.05), transparent);
-            border-radius: 10px;
-            position: relative;
-            overflow: hidden;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 20px;
-        }
-        .instrument-icon {
-            font-size: 3rem;
-            transform: rotate(45deg);
-            opacity: 0.8;
-        }
-        .instrument-icon.right { transform: rotate(-45deg) scaleX(-1); }
-
-        .wedding-title-names {
-            font-family: 'Great Vibes', cursive;
-            font-size: 4rem;
-            color: #80152B;
-            margin: 15px 0;
-        }
-        .wedding-title-names span {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.5rem;
-            display: block;
-            color: #bc9c6c;
-            margin: 5px 0;
+            padding: 0 15px;
+            z-index: 200;
+            pointer-events: none;
         }
 
-        /* Стилизация силуэта пары */
-        .couple-vector {
-            width: 180px;
-            height: 180px;
-            margin: 20px auto;
-            opacity: 0.9;
+        .music-icon-btn, .lang-switch {
+            pointer-events: auto;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
 
-        /* Карточка с пригласительным текстом */
-        .text-card {
-            background: #80152B;
-            color: #ffffff;
-            padding: 35px 25px;
-            border-radius: 25px;
-            margin: 30px 0;
-            box-shadow: 0 12px 30px rgba(128, 21, 43, 0.15);
-        }
-        .text-card h3 {
-            font-family: 'Great Vibes', cursive;
-            font-size: 2.5rem;
-            color: #dfc493;
-            margin-bottom: 15px;
-        }
-        .text-card p {
-            font-size: 0.95rem;
-            line-height: 1.7;
-            font-weight: 300;
-            letter-spacing: 0.5px;
-        }
-
-        /* Календарный блок */
-        .calendar-section {
-            margin: 40px 0;
-        }
-        .month-title {
-            font-size: 1.4rem;
-            font-weight: 500;
-            color: #80152B;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 25px;
+        .music-icon-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
-        }
-        .month-title::before, .month-title::after {
-            content: '♦';
-            color: #dfc493;
-            font-size: 1rem;
+            transition: transform 0.2s;
+            border: none;
         }
 
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 12px;
-            max-width: 320px;
-            margin: 0 auto;
-        }
-        .weekday-label {
+        .music-icon-btn:active { transform: scale(0.9); }
+
+        .lang-switch {
+            padding: 8px 14px;
+            border-radius: 30px;
+            font-size: 11px;
             font-weight: 600;
-            font-size: 0.8rem;
-            color: #bc9c6c;
-            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
-        .day-cell {
-            font-size: 0.95rem;
-            color: #4a3e3d;
-            padding: 5px 0;
+
+        .lang-btn { 
+            cursor: pointer; 
+            transition: color 0.3s; 
+            color: #a0aec0; 
+            padding: 2px 4px;
+        }
+        .lang-btn.active { 
+            color: #b89149; 
+            font-weight: 700; 
+        }
+        .lang-divider { 
+            color: rgba(0,0,0,0.1); 
+            font-weight: 300;
+        }
+
+        /* ЭКРАН 1: КОНВЕРТ */
+        .envelope-screen {
             position: relative;
+            width: 100%;
+            height: 100dvh;
+            background: #7a1616;
+            overflow: hidden;
+            z-index: 100;
+        }
+
+        .envelope-screen::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                linear-gradient(to bottom right, rgba(0,0,0,0.25) 0%, transparent 50%),
+                linear-gradient(to bottom left, rgba(0,0,0,0.25) 0%, transparent 50%),
+                linear-gradient(to top right, rgba(0,0,0,0.25) 0%, transparent 50%),
+                linear-gradient(to top left, rgba(0,0,0,0.25) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .envelope-edge-top {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #942020 0%, #5e0f0f 100%);
             z-index: 1;
         }
-        .day-cell.empty { visibility: hidden; }
-        .day-cell.active-heart {
-            color: #ffffff;
-            font-weight: 600;
+
+        .envelope-edge-bottom {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                linear-gradient(180deg, transparent 49.7%, rgba(0,0,0,0.3) 50%, transparent 50.3%),
+                linear-gradient(90deg, transparent 49.7%, rgba(0,0,0,0.15) 50%, transparent 50.3%);
+            z-index: 3;
+            opacity: 0.8;
         }
-        /* Сердечко вместо стандартного круга на календаре */
-        .day-cell.active-heart::before {
+
+        .envelope-gold-line {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 250vw; height: 4px;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent, transparent 2px,
+                #e6c587 2px, #be9750 5px,
+                transparent 5px, transparent 8px,
+                #e6c587 8px, #be9750 11px,
+                transparent 11px
+            );
+            pointer-events: none;
+            z-index: 4;
+            opacity: 0.8;
+        }
+
+        .gl-left { transform: translate(-50%, -50%) rotate(28deg); }
+        .gl-right { transform: translate(-50%, -50%) rotate(-28deg); }
+
+        @media (max-width: 768px) {
+            .gl-left { transform: translate(-50%, -50%) rotate(54deg); }
+            .gl-right { transform: translate(-50%, -50%) rotate(-54deg); }
+        }
+
+        .envelope-content-wrapper {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%; width: 100%;
+            padding: 15vh 20px 10vh 20px;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .envelope-main-title { font-family: 'Cormorant Garamond', serif; font-weight: 400; line-height: 1.25; }
+        .envelope-main-title .pre-title { font-size: 24px; letter-spacing: 6px; font-weight: 300; color: #f3eacb; }
+        .envelope-main-title .mid-title { font-size: 36px; letter-spacing: 4px; font-weight: 600; display: block; margin-top: 5px; }
+        .envelope-main-title .highlight-title { font-size: 48px; font-style: italic; font-weight: 400; display: block; margin-top: 10px; color: #f3eacb; }
+
+        .wax-seal-btn {
+            margin: auto;
+            transform: translateY(-100px);
+            width: 95px; height: 95px;
+            background: radial-gradient(circle, #f7d99d 0%, #c9a25b 60%, #946e29 100%);
+            border-radius: 50%; border: none; cursor: pointer;
+            box-shadow: 
+                inset 0 3px 6px rgba(255,255,255,0.7), 
+                inset 0 -4px 8px rgba(0,0,0,0.4), 
+                0 12px 35px rgba(0,0,0,0.6);
+            display: flex; align-items: center; justify-content: center;
+            animation: sealPulse 2.5s infinite ease-in-out;
+            z-index: 15;
+        }
+
+        .seal-inner-circle { 
+            width: 78px; height: 78px; 
+            border: 1.5px dashed rgba(74, 50, 15, 0.3); 
+            border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+        }
+
+        #seal-text { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; color: #402b0f; }
+
+        @keyframes sealPulse { 
+            0%, 100% { transform: scale(1); } 
+            50% { transform: scale(1.05); box-shadow: inset 0 3px 6px rgba(255,255,255,0.7), inset 0 -4px 8px rgba(0,0,0,0.4), 0 16px 40px rgba(0,0,0,0.7); } 
+        }
+
+        .signature-pre { font-size: 14px; font-style: italic; color: rgba(255,255,255,0.7); font-family: 'Cormorant Garamond', serif; }
+        .couple-signature { font-size: 13px; font-weight: 500; letter-spacing: 2px; margin-top: 5px; color: #f3eacb; text-transform: uppercase; }
+
+
+        /* ВНУТРЕННИЙ СВЕТЛЫЙ КОНТЕНТ */
+        .main-content {
+            width: 100%;
+            background-color: #ffffff;
+        }
+
+        .main-container-wrapper {
+            max-width: 480px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 0 40px rgba(0,0,0,0.06);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-full-ornament {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            margin: 0;
+            padding: 0;
+        }
+
+        .pomegranate-ribbon {
+            width: 100%; 
+            height: 65px;
+            background-image: url('pomegranate-pattern.png');
+            background-repeat: repeat-x;
+            background-size: auto 100%;
+            background-position: center;
+        }
+
+        /* СТРАНИЦА 1 (ИМЕНА) - ЧИСТЫЙ БЕЛЫЙ ФОН */
+        .names-screen { 
+            width: 100%; 
+            text-align: center; 
+            padding-bottom: 40px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #ffffff;
+        }
+
+        .karnay-layout-container { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            margin-top: 5px;        
+            margin-bottom: 25px;    
+            width: 100%;
+            padding: 0 5px;
+            position: relative;
+            gap: 8px; 
+        }
+
+        .karnay-fluid { 
+            width: 46%;             
+            max-width: 220px;       
+            height: auto; 
+            object-fit: contain;
+            z-index: 6;
+        }
+
+        .karnay-layout-container .kl { transform: rotate(6deg); }
+        .karnay-layout-container .kr { transform: scaleX(-1) rotate(6deg); }
+
+        .center-names { 
+            width: 100%;
+            z-index: 5;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .script-name { 
+            font-family: 'Great Vibes', cursive; 
+            font-size: 46px; 
+            color: #9c1c1c; 
+            font-weight: 400; 
+            line-height: 1.1;
+        }
+
+        @media (max-width: 380px) {
+            .script-name { font-size: 38px; }
+        }
+
+        .script-va { 
+            font-family: 'Cormorant Garamond', serif; 
+            font-style: italic; 
+            font-size: 22px; 
+            color: #7a6b60; 
+            display: block; 
+            margin: 4px 0; 
+        }
+
+        .couple-silhouette-img { 
+            width: 220px; 
+            height: auto; 
+            margin-top: 25px; 
+            display: block;
+        }
+
+        .scroll-indicator {
+            margin-top: 40px;
+            text-align: center;
+            color: #9c1c1c;
+        }
+
+        .scroll-indicator p {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        .arrow-down {
+            font-size: 20px;
+            margin-top: 5px;
+            display: inline-block;
+            animation: bounceArrow 1.6s infinite ease-in-out;
+        }
+
+        @keyframes bounceArrow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(6px); }
+        }
+
+        /* СТРАНИЦА 2: НЕОБЫЧНАЯ КАРТОЧКА С УЗОРАМИ */
+        .card-screen { 
+            padding: 25px 15px; 
+            width: 100%; 
+            background-color: #ffffff;
+        }
+
+        .red-text-card {
+            background-color: #8a1818; 
+            background-image: radial-gradient(circle at center, rgba(138, 24, 24, 0.6) 0%, #5c0f0f 100%), url('pomegranate-pattern.png');
+            background-size: cover, 140px;
+            background-blend-mode: normal, overlay;
+            color: #ffffff; 
+            border-radius: 30px; 
+            padding: 45px 22px; 
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(92, 15, 15, 0.4);
+            border: 2px solid #dfba6b;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Изящные золотистые уголки внутри карточки */
+        .red-text-card::before {
+            content: '';
+            position: absolute;
+            top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border: 1px solid rgba(223, 186, 107, 0.3);
+            border-radius: 22px;
+            pointer-events: none;
+        }
+
+        .card-title { 
+            font-family: 'Cormorant Garamond', serif; 
+            font-size: 32px; 
+            font-weight: 400; 
+            margin-bottom: 22px; 
+            color: #fce6b1;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .card-p { 
+            font-size: 14px; 
+            line-height: 1.75; 
+            margin-bottom: 18px; 
+            font-weight: 300; 
+            color: #f1ebd9; 
+        }
+        
+        .bold-p { 
+            font-weight: 500; 
+            color: #ffffff; 
+            margin-top: 25px; 
+            font-size: 15px;
+        }
+
+        /* КАЛЕНДАРЬ ВНУТРИ КАРТОЧКИ */
+        .inner-calendar { 
+            margin-top: 35px; 
+            border-top: 1px dashed rgba(223,186,107,0.4); 
+            padding-top: 25px; 
+        }
+        
+        .inner-calendar h4 { 
+            font-family: 'Cormorant Garamond', serif; 
+            font-size: 24px; 
+            font-weight: 400; 
+            margin-bottom: 15px; 
+            color: #fce6b1;
+            letter-spacing: 1px;
+        }
+        
+        .mini-calendar { 
+            width: 100%; 
+            font-size: 14px; 
+            border-collapse: collapse; 
+        }
+        
+        .mini-calendar th, .mini-calendar td { 
+            padding: 8px 3px; 
+            text-align: center; 
+        }
+        
+        .mini-calendar th { 
+            color: #dfba6b; 
+            font-weight: 600; 
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+        
+        .mini-calendar .wk { 
+            color: rgba(254, 230, 177, 0.4); 
+        }
+        
+        /* Креативное выделение 6-го числа сердцем */
+        .active-day { 
+            color: #ffffff !important; 
+            font-weight: bold; 
+            position: relative;
+            z-index: 2;
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            line-height: 30px;
+        }
+
+        .active-day::before {
             content: '♥';
             position: absolute;
-            top: 48%;
+            top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%) scale(2.2);
-            color: #80152B;
+            transform: translate(-50%, -50%);
+            font-size: 34px;
+            color: #dfba6b;
             z-index: -1;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
         }
 
-        /* Информация о ресторане */
-        .venue-info {
-            background: #ffffff;
-            border: 1px solid #f0eae1;
-            border-radius: 20px;
-            padding: 30px 20px;
-            margin: 40px 0;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.02);
-        }
-        .venue-label {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #bc9c6c;
-            margin-bottom: 5px;
-        }
-        .venue-name {
-            font-size: 1.8rem;
-            color: #80152B;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        .venue-address {
-            font-size: 0.9rem;
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 25px;
+        .bottom-ribbon { 
+            margin-top: 40px; 
         }
 
-        .map-buttons-container {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
+        /* СТРАНИЦА 3 (ФИНАЛЬНАЯ С ТАЙМЕРОМ) - ЧИСТЫЙ БЕЛЫЙ ФОН */
+        .final-screen { 
+            padding: 40px 20px; 
+            text-align: center; 
+            background-color: #ffffff;
+            flex-grow: 1;
         }
-        .map-lnk {
-            flex: 1;
-            max-width: 180px;
-            padding: 12px 10px;
-            border: 1px solid #80152B;
-            color: #80152B;
-            text-decoration: none;
-            border-radius: 25px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s;
-        }
-        .map-lnk:hover {
-            background: #80152B;
-            color: #ffffff;
-        }
+        
+        .location-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: #a62424; font-weight: 400; margin-bottom: 12px; }
+        .rest-name { font-size: 20px; font-weight: 600; color: #4a3b32; letter-spacing: 0.5px; }
+        .rest-city { font-size: 13px; color: #7a6b60; margin-top: 4px; line-height: 1.4; }
 
-        /* Вспомогательные классы анимации */
-        .envelope-wrapper.hide-envelope {
-            transform: translateY(-100vh);
+        .map-links-flex { display: flex; justify-content: center; margin: 25px 0 45px 0; width: 100%; }
+        
+        .flat-map-btn.yandex-only {
+            width: 100%;
+            max-width: 280px; 
+            text-decoration: none; 
+            border: 1px solid #a62424; 
+            color: #a62424;
+            padding: 12px; 
+            font-size: 12px; 
+            font-weight: 600; 
+            letter-spacing: 1px; 
+            border-radius: 6px;
+            background: transparent;
+            transition: all 0.3s ease;
+        }
+        .flat-map-btn.yandex-only:active { background: #a62424; color: #ffffff; }
+
+        .timer-title { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-style: italic; color: #a62424; font-weight: 400; margin-bottom: 20px; }
+        .clean-timer { display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 25px; }
+        .t-node { text-align: center; min-width: 55px; }
+        .t-node span { font-family: 'Cormorant Garamond', serif; font-size: 44px; color: #a62424; display: block; line-height: 1; }
+        .t-node p { font-size: 11px; color: #aba096; margin-top: 4px; }
+        .t-colon { font-family: 'Cormorant Garamond', serif; font-size: 30px; color: #a62424; transform: translateY(-10px); }
+
+        .wait-text { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: #a62424; margin-bottom: 25px; }
+        .footer-flower-img { width: 80px; height: auto; }
+        .studio-footer { text-align: center; font-size: 9px; letter-spacing: 2px; color: #cbd5e1; padding: 25px 0 10px 0; background-color: #ffffff; }
+
+        .animated-fade { animation: fIn 1.2s ease-out; }
+        @keyframes fIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* АНИМАЦИЯ ПОЭТАПНОГО ПОЯВЛЕНИЯ ПЕРВОГО ЭКРАНА */
+        .fade-in-step {
             opacity: 0;
+            transform: translateY(15px);
+            animation: stepsFadeIn 0.8s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;
+        }
+        .step-1 { animation-delay: 0.1s; }
+        .step-2 { animation-delay: 0.3s; }
+        .step-3 { animation-delay: 0.6s; }
+        .step-4 { animation-delay: 0.9s; }
+        .step-5 { animation-delay: 1.2s; }
+
+        @keyframes stepsFadeIn {
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Скрытие элементов неактивного языка */
-        [data-lang] { display: none; }
-        body.lang-ru [data-lang="ru"] { display: block; }
-        body.lang-ru span[data-lang="ru"] { display: inline; }
-        body.lang-uz [data-lang="uz"] { display: block; }
-        body.lang-uz span[data-lang="uz"] { display: inline; }
+        /* ПЛАВНАЯ АНИМАЦИЯ ДЛЯ СКРОЛЛА */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
-<body class="lang-uz"> <div class="top-controls">
-        <button class="music-btn" id="musicToggle" onclick="toggleMusic()">🎵</button>
+<body>
+
+    <audio id="bg-music" src="music.mp3" loop></audio>
+
+    <div class="top-controls">
+        <button id="music-toggle" class="music-icon-btn" onclick="toggleMusic()">
+            <span id="music-status-icon">🎵</span>
+        </button>
         <div class="lang-switch">
-            <button class="lang-btn" id="btnUz" onclick="setLanguage('uz')">UZ</button>
-            <button class="lang-btn" id="btnRu" onclick="setLanguage('ru')">RU</button>
+            <span id="lang-ru" class="lang-btn" onclick="switchLanguage('ru')">RU</span>
+            <span class="lang-divider">|</span>
+            <span id="lang-uz" class="lang-btn active" onclick="switchLanguage('uz')">UZ</span>
         </div>
     </div>
 
-    <audio id="bgMusic" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+    <section id="welcome-card" class="envelope-screen flex-center">
+        <div class="envelope-edge-top"></div>
+        <div class="envelope-edge-bottom"></div>
+        <div class="envelope-gold-line gl-left"></div>
+        <div class="envelope-gold-line gl-right"></div>
 
-    <div class="envelope-wrapper" id="envelopeWrapper">
-        <div class="envelope-lines"></div>
-        <div class="envelope-title-area">
-            <h1>SIZ</h1>
-            <h1>TO'YIMIZGA</h1>
-            <p data-lang="uz">taklif etilgansiz</p>
-            <p data-lang="ru">приглашены на нашу свадьбу</p>
-        </div>
+        <div class="envelope-content-wrapper animated-fade">
+            <div class="envelope-text-top">
+                <h1 class="envelope-main-title">
+                    <span class="pre-title data-translate" data-uz="SIZ" data-ru="ВЫ">SIZ</span><br>
+                    <span class="mid-title data-translate" data-uz="TO'YIMIZGA" data-ru="НА НАШУ СВАДЬБУ">TO'YIMIZGA</span><br>
+                    <span class="highlight-title data-translate" data-uz="taklif etilgansiz" data-ru="приглашены">taklif etilgansiz</span>
+                </h1>
+            </div>
 
-        <div class="seal-container" onclick="openEnvelope()">
-            <div class="wax-seal">
-                <div class="seal-text" id="sealText">Ochish</div>
+            <div id="open-btn" class="wax-seal-btn" onclick="openInvitation()">
+                <div class="seal-inner-circle">
+                    <span id="seal-text" class="data-translate" data-uz="OCHISH" data-ru="ОТКРЫТЬ">OCHISH</span>
+                </div>
+            </div>
+
+            <div class="envelope-text-bottom">
+                <p class="signature-pre data-translate" data-uz="muhabbat ila," data-ru="с любовью,">muhabbat ila,</p>
+                <p class="couple-signature data-translate" data-uz="MUHAMMADAZIZ & RUHSHONA" data-ru="МУХАММАДАЗИЗ & РУХШОНА">MUHAMMADAZIZ & RUHSHONA</p>
             </div>
         </div>
+    </section>
 
-        <div class="envelope-footer">
-            <span data-lang="uz">muhabbat ila,</span>
-            <span data-lang="ru">с любовью,</span>
-            <strong>TEMURBEK VA NODIRABEGIM</strong>
-        </div>
-    </div>
-
-    <div class="main-container">
-        
-        <div class="top-pattern">
-            <div class="instrument-icon">🎺</div>
-            <div class="wedding-title-names">
-                Temurbek
-                <span>va / и</span>
-                Nodirabegim
-            </div>
-            <div class="instrument-icon right">🎺</div>
-        </div>
-
-        <svg class="couple-vector" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <g fill="#80152B">
-                <path d="M35 85 C35 65, 42 50, 45 45 C43 43, 40 35, 42 25 C45 22, 48 25, 47 30 C50 35, 48 43, 46 45 C49 50, 56 65, 56 85 Z"/>
-                <path d="M65 85 C65 62, 58 50, 55 45 C57 43, 60 35, 58 25 C55 22, 52 25, 53 30 C50 35, 52 43, 54 45 C51 50, 44 62, 44 85 Z"/>
-                <circle cx="44" cy="28" r="3" fill="#dfc493"/>
-                <circle cx="56" cy="28" r="3" fill="#dfc493"/>
-            </g>
-        </svg>
-
-        <div class="text-card">
-            <h3 data-lang="uz">Aziz va qadrdon insonimiz!</h3>
-            <h3 data-lang="ru">Дорогой гость!</h3>
+    <section id="letter-card" class="main-content" style="display: none;">
+        <div class="main-container-wrapper">
             
-            <p data-lang="uz">
-                Hayotimizdagi eng baxtli kunlardan biri - nikoh to'yimizni siz bilan birga nishonlashni niyat qildik. <br><br>
-                Sizni ushbu kechamizga samimiy taklif etamiz. Quvonchli kunimizda aziz mehmonimiz bo'lishingizni intizorlik bilan kutamiz.
-            </p>
-            <p data-lang="ru">
-                Один из самых счастливых дней в нашей жизни — день нашей свадьбы, мы хотим отпраздновать вместе с вами. <br><br>
-                Искренне приглашаем вас на этот праздничный вечер. Будем рады видеть вас в качестве нашего дорогого гостя!
-            </p>
+            <div class="names-screen scroll-reveal">
+                <img src="ornament.png" class="top-full-ornament fade-in-step step-1" alt="Ornament">
+                
+                <div class="pomegranate-ribbon fade-in-step step-2"></div> 
+                
+                <div class="karnay-layout-container fade-in-step step-3">
+                    <img src="karnay-left.png" class="karnay-fluid kl" alt="Karnay Left">
+                    <img src="karnay-left.png" class="karnay-fluid kr" alt="Karnay Right">
+                </div>
+                
+                <div class="center-names fade-in-step step-3">
+                    <h2 class="script-name data-translate" data-uz="Muhammadaziz" data-ru="Мухаммадазиз">Muhammadaziz</h2>
+                    <span class="script-va data-translate" data-uz="va" data-ru="и">va</span>
+                    <h2 class="script-name data-translate" data-uz="Ruhshona" data-ru="Рухшона">Ruhshona</h2>
+                </div>
+                
+                <img src="couple.png" class="couple-silhouette-img fade-in-step step-4" alt="Couple">
+
+                <div class="scroll-indicator fade-in-step step-5">
+                    <p class="data-translate" data-uz="PASTGA TUSHURING" data-ru="ЛИСТАЙТЕ ВНИЗ">PASTGA TUSHURING</p>
+                    <div class="arrow-down">↓</div>
+                </div>
+            </div>
+
+            <div class="card-screen scroll-reveal">
+                <div class="red-text-card">
+                    <h2 class="card-title data-translate" data-uz="Aziz va qadrdon insonimiz!" data-ru="Дорогой и близкий наш человек!">Aziz va qadrdon insonimiz!</h2>
+                    
+                    <p class="card-p data-translate" 
+                       data-uz="Hayotimizdagi eng baxtli kunlardan biri - nikoh to'yimizni siz bilan birga nishonlashni niyat qildik."
+                       data-ru="Мы искренне желаем отпраздновать один из самых счастливых дней в нашей жизни — день нашей свадьбы — вместе с вами.">
+                        Hayotimizdagi eng baxtli kunlardan biri - nikoh to'yimizni siz bilan birga nishonlashni niyat qildik.
+                    </p>
+                    
+                    <p class="card-p data-translate" 
+                       data-uz="Sizni ushbu kechamizga samimiy taklif etamiz."
+                       data-ru="Искренне приглашаем вас на этот праздничный вечер.">
+                        Sizni ushbu kechamizga samimiy taklif etamiz.
+                    </p>
+                    
+                    <p class="card-p bold-p data-translate" 
+                       data-uz="Quvonchli kunimizda aziz mehmonimiz bo'lishingizni intizorlik bilan kutamiz."
+                       data-ru="С нетерпением будем рады видеть вас в качестве нашего дорогого гостя в этот радостный день.">
+                        Quvonchli kunimizda aziz mehmonimiz bo'lishingizni intizorlik bilan kutamiz.
+                    </p>
+
+                    <div class="inner-calendar">
+                        <h4 class="data-translate" data-uz="Avgust 2026" data-ru="Август 2026">Avgust 2026</h4>
+                        <table class="mini-calendar">
+                            <thead>
+                                <tr id="calendar-weekdays">
+                                    <th>Du</th><th>Se</th><th>Ch</th><th>Pa</th><th>Ju</th><th class="wk">Sh</th><th class="wk">Ya</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td></td><td></td><td></td><td></td><td></td><td class="wk">1</td><td class="wk">2</td></tr>
+                                <tr><td>3</td><td>4</td><td>5</td><td class="active-day">6</td><td>7</td><td class="wk">8</td><td class="wk">9</td></tr>
+                                <tr><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td class="wk">15</td><td class="wk">16</td></tr>
+                                <tr><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td class="wk">22</td><td class="wk">23</td></tr>
+                                <tr><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td><td class="wk">29</td><td class="wk">30</td></tr>
+                                <tr><td>31</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="pomegranate-ribbon bottom-ribbon"></div> 
+            </div>
+
+            <div class="final-screen scroll-reveal">
+                <h3 class="location-title data-translate" data-uz="To'y manzili" data-ru="Место проведения">To'y manzili</h3>
+                <p class="rest-name data-translate" data-uz='"NOORUZ" Restorani' data-ru='Ресторан "НАВРУЗ"'>"NOORUZ" Restorani</p>
+                <p class="rest-city data-translate" data-uz="Osh shahri, Askar Shakirov ko'chasi, 240A/1" data-ru="город Ош, улица Аскара Шакирова, 240А/1">Osh shahri, Askar Shakirov ko'chasi, 240A/1</p>
+                
+                <div class="map-links-flex">
+                    <a href="https://yandex.com.tr/maps/org/nowruz/110373152025/?ll=72.808670%2C40.530193&z=17" target="_blank" class="flat-map-btn yandex-only data-translate" data-uz="YANDEX XARITASI" data-ru="ЯНДЕКС КАРТА">YANDEX XARITASI</a>
+                </div>
+
+                <div class="countdown-section">
+                    <h3 class="timer-title data-translate" data-uz="Har lahzani sanayapmiz" data-ru="Считаем каждое мгновение">Har lahzani sanayapmiz</h3>
+                    
+                    <div id="countdown-timer" class="clean-timer">
+                        <div class="t-node"><span id="days">00</span><p class="data-translate" data-uz="Kun" data-ru="Дней">Kun</p></div>
+                        <div class="t-colon">:</div>
+                        <div class="t-node"><span id="hours">00</span><p class="data-translate" data-uz="Soat" data-ru="Часов">Soat</p></div>
+                        <div class="t-colon">:</div>
+                        <div class="t-node"><span id="minutes">00</span><p class="data-translate" data-uz="Daqiqa" data-ru="Минут">Daqiqa</p></div>
+                        <div class="t-colon">:</div>
+                        <div class="t-node"><span id="seconds">00</span><p class="data-translate" data-uz="Soniya" data-ru="Секунд">Soniya</p></div>
+                    </div>
+
+                    <p class="wait-text data-translate" data-uz="Sizni intiqlik bilan kutamiz." data-ru="Ждем вас с нетерпением.">Sizni intiqlik bilan kutamiz.</p>
+                    <img src="bottom-flower.png" class="footer-flower-img" alt="Flower">
+                </div>
+            </div>
+
+            <footer class="studio-footer data-translate" data-uz="BY MUHAMMADAZIZ" data-ru="РАЗРАБОТАНО МУХАММАДАЗИЗОМ">
+                BY MUHAMMADAZIZ
+            </footer>
         </div>
-
-        <div class="calendar-section">
-            <div class="month-title">
-                <span data-lang="uz">Avgust, 2026</span>
-                <span data-lang="ru">Август, 2026</span>
-            </div>
-            
-            <div class="calendar-grid">
-                <div class="weekday-label">Du</div>
-                <div class="weekday-label">Se</div>
-                <div class="weekday-label">Ch</div>
-                <div class="weekday-label">Pa</div>
-                <div class="weekday-label">Ju</div>
-                <div class="weekday-label">Sh</div>
-                <div class="weekday-label">Ya</div>
-                
-                <div class="day-cell empty"></div>
-                <div class="day-cell empty"></div>
-                <div class="day-cell empty"></div>
-                <div class="day-cell empty"></div>
-                <div class="day-cell empty"></div>
-                <div class="day-cell">1</div>
-                <div class="day-cell">2</div>
-                
-                <div class="day-cell">3</div>
-                <div class="day-cell">4</div>
-                <div class="day-cell">5</div>
-                <div class="day-cell active-heart">6</div> <div class="day-cell">7</div>
-                <div class="day-cell">8</div>
-                <div class="day-cell">9</div>
-                
-                <div class="day-cell">10</div>
-                <div class="day-cell">11</div>
-                <div class="day-cell">12</div>
-                <div class="day-cell">13</div>
-                <div class="day-cell">14</div>
-                <div class="day-cell">15</div>
-                <div class="day-cell">16</div>
-                
-                <div class="day-cell">17</div>
-                <div class="day-cell">18</div>
-                <div class="day-cell">19</div>
-                <div class="day-cell">20</div>
-                <div class="day-cell">21</div>
-                <div class="day-cell">22</div>
-                <div class="day-cell">23</div>
-                
-                <div class="day-cell">24</div>
-                <div class="day-cell">25</div>
-                <div class="day-cell">26</div>
-                <div class="day-cell">27</div>
-                <div class="day-cell">28</div>
-                <div class="day-cell">29</div>
-                <div class="day-cell">30</div>
-                <div class="day-cell">31</div>
-            </div>
-        </div>
-
-        <div class="venue-info">
-            <div class="venue-label" data-lang="uz">To'y manzili</div>
-            <div class="venue-label" data-lang="ru">Место проведения</div>
-            
-            <div class="venue-name">NOORUZ RESTORANI</div>
-            
-            <div class="venue-address" data-lang="uz">
-                Osh shahri, Qirg'iziston<br>
-                Mo'ljal: Mehmonlar yig'ilishi soat 18:00 da boshlanadi
-            </div>
-            <div class="venue-address" data-lang="ru">
-                город Ош, Кыргызстан<br>
-                Ориентир: Сбор гостей начинается в 18:00
-            </div>
-
-            <div class="map-buttons-container">
-                <a href="https://yandex.com/maps" target="_blank" class="map-lnk">Yandex Xaritasi</a>
-                <a href="https://google.com/maps" target="_blank" class="map-lnk">Google Maps</a>
-            </div>
-        </div>
-
-    </div>
+    </section>
 
     <script>
-        const audio = document.getElementById('bgMusic');
+        let currentLang = 'uz';
 
-        // Управление языком интерфейса
-        function setLanguage(lang) {
-            document.body.className = 'lang-' + lang;
-            
-            // Динамически меняем текст на сургучной печати в зависимости от языка
-            const sealText = document.getElementById('sealText');
-            if (lang === 'uz') {
-                sealText.innerText = 'Ochish';
-                document.getElementById('btnUz').classList.add('active');
-                document.getElementById('btnRu').classList.remove('active');
-            } else {
-                sealText.innerText = 'Открыть';
-                document.getElementById('btnRu').classList.add('active');
-                document.getElementById('btnUz').classList.remove('active');
-            }
-        }
-
-        // Логика анимации открытия конверта и старта музыки
-        function openEnvelope() {
-            document.getElementById('envelopeWrapper').classList.add('hide-envelope');
-            
-            // Автоматическое воспроизведение музыки при открытии
-            audio.play().catch(error => {
-                console.log("Автоплей заблокирован браузером, воспроизведение начнется после клика.");
+        function openInvitation() {
+            const music = document.getElementById('bg-music');
+            music.play().then(() => {
+                document.getElementById('music-status-icon').innerText = "🔊";
+            }).catch(error => {
+                console.log("Воспроизведение заблокировано до прямого взаимодействия.");
+                document.getElementById('music-status-icon').innerText = "🔇";
             });
+
+            document.getElementById('letter-card').style.display = 'block';
+            initScrollReveal();
+            document.getElementById('letter-card').scrollIntoView({ behavior: 'smooth' });
+
+            setTimeout(() => {
+                document.getElementById('welcome-card').style.display = 'none';
+                window.scrollTo(0, 0);
+            }, 800);
         }
 
-        // Кнопка включения/выключения музыки на самом сайте
         function toggleMusic() {
-            const musicBtn = document.getElementById('musicToggle');
-            if (audio.paused) {
-                audio.play();
-                musicBtn.innerText = '🎵';
+            const music = document.getElementById('bg-music');
+            const icon = document.getElementById('music-status-icon');
+            
+            if (music.paused) {
+                music.play();
+                icon.innerText = "🔊";
             } else {
-                audio.pause();
-                musicBtn.innerText = '🔇';
+                music.pause();
+                icon.innerText = "🔇";
             }
         }
 
-        // Первичная инициализация активной кнопки
-        document.getElementById('btnUz').classList.add('active');
+        function switchLanguage(lang) {
+            currentLang = lang;
+            
+            document.getElementById('lang-uz').classList.toggle('active', lang === 'uz');
+            document.getElementById('lang-ru').classList.toggle('active', lang === 'ru');
+            
+            const textElements = document.querySelectorAll('.data-translate');
+            textElements.forEach(elem => {
+                elem.innerText = elem.getAttribute(`data-${lang}`);
+            });
+
+            const weekdays = document.getElementById('calendar-weekdays');
+            if (lang === 'ru') {
+                weekdays.innerHTML = '<th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th class="wk">Сб</th><th class="wk">Вс</th>';
+            } else {
+                weekdays.innerHTML = '<th>Du</th><th>Se</th><th>Ch</th><th>Pa</th><th>Ju</th><th class="wk">Sh</th><th class="wk">Ya</th>';
+            }
+        }
+
+        function initScrollReveal() {
+            const revealElements = document.querySelectorAll('.scroll-reveal');
+            
+            const revealOnScroll = () => {
+                const triggerBottom = window.innerHeight * 0.85;
+                
+                revealElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    
+                    if (elementTop < triggerBottom) {
+                        element.classList.add('revealed');
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', revealOnScroll);
+            revealOnScroll();
+        }
+
+        // НАСТРОЙКА ТАЙМЕРА НА СВАДЬБУ: 6 АВГУСТА 2026 В 16:00
+        const weddingDate = new Date("August 6, 2026 16:00:00").getTime();
+
+        const timerInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const timeLeft = weddingDate - now;
+
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+
+            if (timeLeft < 0) {
+                clearInterval(timerInterval);
+                document.getElementById("countdown-timer").innerHTML = 
+                    `<p style='color:#a62424; font-size:20px; font-family: "Cormorant Garamond", serif;'>${currentLang === 'uz' ? "To'y boshlandi!" : "Свадьба началась!"}</p>`;
+            }
+        }, 1000);
     </script>
 </body>
 </html>
