@@ -1,780 +1,946 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TANTANALI TAKLIFNOMA</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        /* Базовые настройки */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: #ffffff;
-            color: #4a3b32;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
+<title>TANTANALI TAKLIFNOMA</title>
 
-        .flex-center {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-        /* КНОПКИ ЗВУКА И ЯЗЫКА */
-        .top-controls {
-            position: fixed;
-            top: 15px;
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 15px;
-            z-index: 200;
-            pointer-events: none;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-        .music-icon-btn, .lang-switch {
-            pointer-events: auto;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
+<style>
 
-        .music-icon-btn {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s;
-            border: none;
-        }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        .music-icon-btn:active { transform: scale(0.9); }
+body{
+    font-family:'Montserrat',sans-serif;
+    background:#fff;
+    overflow-x:hidden;
+    color:#4a3b32;
+    -webkit-font-smoothing:antialiased;
+}
 
-        .lang-switch {
-            padding: 8px 14px;
-            border-radius: 30px;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+.flex-center{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
 
-        .lang-btn { 
-            cursor: pointer; 
-            transition: color 0.3s; 
-            color: #a0aec0; 
-            padding: 2px 4px;
-        }
-        .lang-btn.active { 
-            color: #b89149; 
-            font-weight: 700; 
-        }
-        .lang-divider { 
-            color: rgba(0,0,0,0.1); 
-            font-weight: 300;
-        }
+/* TOP BUTTONS */
 
-        /* ЭКРАН 1: КОНВЕРТ */
-        .envelope-screen {
-            position: relative;
-            width: 100%;
-            height: 100dvh;
-            background: #8a1818;
-            overflow: hidden;
-            z-index: 100;
-        }
+.top-controls{
+    position:fixed;
+    top:15px;
+    left:0;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 15px;
+    z-index:500;
+    pointer-events:none;
+}
 
-        .envelope-screen::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: 
-                linear-gradient(to bottom right, rgba(0,0,0,0.25) 0%, transparent 50%),
-                linear-gradient(to bottom left, rgba(0,0,0,0.25) 0%, transparent 50%),
-                linear-gradient(to top right, rgba(0,0,0,0.25) 0%, transparent 50%),
-                linear-gradient(to top left, rgba(0,0,0,0.25) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: 2;
-        }
+.music-icon-btn,
+.lang-switch{
+    pointer-events:auto;
+    background:rgba(255,255,255,0.9);
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,0.4);
+    box-shadow:0 5px 18px rgba(0,0,0,0.08);
+}
 
-        .envelope-edge-top {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #8a1818 0%, #5c0f0f 100%);
-            z-index: 1;
-        }
+.music-icon-btn{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    border:none;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:17px;
+}
 
-        .envelope-edge-bottom {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: 
-                linear-gradient(180deg, transparent 49.7%, rgba(0,0,0,0.3) 50%, transparent 50.3%),
-                linear-gradient(90deg, transparent 49.7%, rgba(0,0,0,0.15) 50%, transparent 50.3%);
-            z-index: 3;
-            opacity: 0.8;
-        }
+.lang-switch{
+    padding:8px 14px;
+    border-radius:30px;
+    font-size:11px;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
 
-        .envelope-gold-line {
-            position: absolute;
-            top: 50%; left: 50%;
-            width: 250vw; height: 4px;
-            background: repeating-linear-gradient(
-                90deg,
-                transparent, transparent 2px,
-                #e6c587 2px, #be9750 5px,
-                transparent 5px, transparent 8px,
-                #e6c587 8px, #be9750 11px,
-                transparent 11px
-            );
-            pointer-events: none;
-            z-index: 4;
-            opacity: 0.8;
-        }
+.lang-btn{
+    cursor:pointer;
+    color:#a0aec0;
+}
 
-        .gl-left { transform: translate(-50%, -50%) rotate(28deg); }
-        .gl-right { transform: translate(-50%, -50%) rotate(-28deg); }
+.lang-btn.active{
+    color:#7b1e2b;
+    font-weight:700;
+}
 
-        @media (max-width: 768px) {
-            .gl-left { transform: translate(-50%, -50%) rotate(54deg); }
-            .gl-right { transform: translate(-50%, -50%) rotate(-54deg); }
-        }
+.lang-divider{
+    color:#ccc;
+}
 
-        .envelope-content-wrapper {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%; width: 100%;
-            padding: 15vh 20px 10vh 20px;
-            text-align: center;
-            color: #ffffff;
-        }
+/* ENVELOPE */
 
-        .envelope-main-title { font-family: 'Cormorant Garamond', serif; font-weight: 400; line-height: 1.25; }
-        .envelope-main-title .pre-title { font-size: 24px; letter-spacing: 6px; font-weight: 300; color: #f3eacb; }
-        .envelope-main-title .mid-title { font-size: 36px; letter-spacing: 4px; font-weight: 600; display: block; margin-top: 5px; }
-        .envelope-main-title .highlight-title { font-size: 48px; font-style: italic; font-weight: 400; display: block; margin-top: 10px; color: #f3eacb; }
+.envelope-screen{
+    position:relative;
+    width:100%;
+    height:100dvh;
+    overflow:hidden;
+    background:#7b1e2b;
+}
 
-        .wax-seal-btn {
-            margin: auto;
-            transform: translateY(-100px);
-            width: 95px; height: 95px;
-            background: radial-gradient(circle, #f7d99d 0%, #c9a25b 60%, #946e29 100%);
-            border-radius: 50%; border: none; cursor: pointer;
-            box-shadow: 
-                inset 0 3px 6px rgba(255,255,255,0.7), 
-                inset 0 -4px 8px rgba(0,0,0,0.4), 
-                0 12px 35px rgba(0,0,0,0.6);
-            display: flex; align-items: center; justify-content: center;
-            animation: sealPulse 2.5s infinite ease-in-out;
-            z-index: 15;
-        }
+.envelope-edge-top{
+    position:absolute;
+    inset:0;
+    background:radial-gradient(circle at center,#9b2c3d 0%,#6d1724 100%);
+}
 
-        .seal-inner-circle { 
-            width: 78px; height: 78px; 
-            border: 1.5px dashed rgba(74, 50, 15, 0.3); 
-            border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; 
-        }
+.envelope-edge-bottom{
+    position:absolute;
+    inset:0;
+    background:
+    linear-gradient(180deg,transparent 49.7%,rgba(0,0,0,0.25) 50%,transparent 50.3%),
+    linear-gradient(90deg,transparent 49.7%,rgba(0,0,0,0.1) 50%,transparent 50.3%);
+}
 
-        #seal-text { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; color: #402b0f; }
+.envelope-gold-line{
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:250vw;
+    height:4px;
 
-        @keyframes sealPulse { 
-            0%, 100% { transform: scale(1); } 
-            50% { transform: scale(1.05); box-shadow: inset 0 3px 6px rgba(255,255,255,0.7), inset 0 -4px 8px rgba(0,0,0,0.4), 0 16px 40px rgba(0,0,0,0.7); } 
-        }
+    background:repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 2px,
+    #f4d48c 2px,
+    #d2a85d 5px,
+    transparent 5px,
+    transparent 8px,
+    #f4d48c 8px,
+    #d2a85d 11px,
+    transparent 11px
+    );
 
-        .signature-pre { font-size: 14px; font-style: italic; color: rgba(255,255,255,0.7); font-family: 'Cormorant Garamond', serif; }
-        .couple-signature { font-size: 13px; font-weight: 500; letter-spacing: 2px; margin-top: 5px; color: #f3eacb; text-transform: uppercase; }
+    opacity:0.8;
+}
 
+.gl-left{
+    transform:translate(-50%,-50%) rotate(30deg);
+}
 
-        /* ВНУТРЕННИЙ СВЕТЛЫЙ КОНТЕНТ */
-        .main-content {
-            width: 100%;
-            background-color: #ffffff;
-        }
+.gl-right{
+    transform:translate(-50%,-50%) rotate(-30deg);
+}
 
-        .main-container-wrapper {
-            max-width: 480px;
-            margin: 0 auto;
-            background-color: #ffffff;
-            box-shadow: 0 0 40px rgba(0,0,0,0.06);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+.envelope-content-wrapper{
+    position:relative;
+    z-index:10;
+    height:100%;
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+    padding:15vh 20px 10vh;
+    color:#fff;
+}
 
-        .top-full-ornament {
-            width: 100%;
-            height: auto;
-            display: block;
-            object-fit: cover;
-            margin: 0;
-            padding: 0;
-        }
+.pre-title{
+    font-size:24px;
+    letter-spacing:6px;
+    color:#f7e8c5;
+}
 
-        .pomegranate-ribbon {
-            width: 100%; 
-            height: 65px;
-            background-image: url('pomegranate-pattern.png');
-            background-repeat: repeat-x;
-            background-size: auto 100%;
-            background-position: center;
-        }
+.mid-title{
+    display:block;
+    font-size:38px;
+    margin-top:6px;
+}
 
-        /* СТРАНИЦА 1 (ИМЕНА) - ЧИСТЫЙ БЕЛЫЙ ФОН */
-        .names-screen { 
-            width: 100%; 
-            text-align: center; 
-            padding-bottom: 40px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: #ffffff;
-        }
+.highlight-title{
+    display:block;
+    margin-top:12px;
+    font-size:52px;
+    color:#f7e8c5;
+    font-family:'Great Vibes',cursive;
+}
 
-        .karnay-layout-container { 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            margin-top: 5px;        
-            margin-bottom: 25px;    
-            width: 100%;
-            padding: 0 5px;
-            position: relative;
-            gap: 8px; 
-        }
+.wax-seal-btn{
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    border:none;
+    cursor:pointer;
 
-        .karnay-fluid { 
-            width: 46%;             
-            max-width: 220px;       
-            height: auto; 
-            object-fit: contain;
-            z-index: 6;
-        }
+    background:radial-gradient(circle,#f8ddb0 0%,#d5aa63 60%,#91601d 100%);
 
-        .karnay-layout-container .kl { transform: rotate(6deg); }
-        .karnay-layout-container .kr { transform: scaleX(-1) rotate(6deg); }
+    box-shadow:
+    inset 0 3px 6px rgba(255,255,255,0.7),
+    inset 0 -4px 8px rgba(0,0,0,0.4),
+    0 15px 35px rgba(0,0,0,0.5);
 
-        .center-names { 
-            width: 100%;
-            z-index: 5;
-            text-align: center;
-            padding: 0 20px;
-        }
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-        .script-name { 
-            font-family: 'Great Vibes', cursive; 
-            font-size: 46px; 
-            color: #8a1818; 
-            font-weight: 400; 
-            line-height: 1.1;
-        }
+    animation:sealPulse 2.5s infinite ease-in-out;
+}
 
-        @media (max-width: 380px) {
-            .script-name { font-size: 38px; }
-        }
+@keyframes sealPulse{
+    0%,100%{
+        transform:scale(1);
+    }
 
-        .script-va { 
-            font-family: 'Cormorant Garamond', serif; 
-            font-style: italic; 
-            font-size: 22px; 
-            color: #7a6b60; 
-            display: block; 
-            margin: 4px 0; 
-        }
+    50%{
+        transform:scale(1.05);
+    }
+}
 
-        .couple-silhouette-img { 
-            width: 220px; 
-            height: auto; 
-            margin-top: 25px; 
-            display: block;
-        }
+.seal-inner-circle{
+    width:78px;
+    height:78px;
+    border-radius:50%;
+    border:1px dashed rgba(0,0,0,0.3);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
 
-        .scroll-indicator {
-            margin-top: 40px;
-            text-align: center;
-            color: #8a1818;
-        }
+#seal-text{
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:1px;
+    color:#4a2f0b;
+}
 
-        .scroll-indicator p {
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 2px;
-        }
+.signature-pre{
+    font-style:italic;
+    color:rgba(255,255,255,0.7);
+}
 
-        .arrow-down {
-            font-size: 20px;
-            margin-top: 5px;
-            display: inline-block;
-            animation: bounceArrow 1.6s infinite ease-in-out;
-        }
+.couple-signature{
+    margin-top:5px;
+    letter-spacing:2px;
+    color:#f5deb2;
+    font-size:13px;
+}
 
-        @keyframes bounceArrow {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(6px); }
-        }
+/* MAIN */
 
-        /* СТРАНИЦА 2: НЕОБЫЧНАЯ КАРТОЧКА С УЗОРАМИ */
-        .card-screen { 
-            padding: 25px 15px; 
-            width: 100%; 
-            background-color: #ffffff;
-        }
+.main-content{
+    background:#fff;
+}
 
-        .red-text-card {
-            background-color: #8a1818; 
-            background-image: radial-gradient(circle at center, rgba(138, 24, 24, 0.6) 0%, #5c0f0f 100%), url('pomegranate-pattern.png');
-            background-size: cover, 140px;
-            background-blend-mode: normal, overlay;
-            color: #ffffff; 
-            border-radius: 30px; 
-            padding: 45px 22px; 
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(138, 24, 24, 0.4);
-            border: 2px solid #dfba6b;
-            position: relative;
-            overflow: hidden;
-        }
+.main-container-wrapper{
+    max-width:480px;
+    margin:auto;
+    background:#fff;
+    box-shadow:0 0 40px rgba(0,0,0,0.05);
+}
 
-        /* Изящные золотистые уголки внутри карточки */
-        .red-text-card::before {
-            content: '';
-            position: absolute;
-            top: 10px; left: 10px; right: 10px; bottom: 10px;
-            border: 1px solid rgba(223, 186, 107, 0.3);
-            border-radius: 22px;
-            pointer-events: none;
-        }
+.top-full-ornament{
+    width:100%;
+}
 
-        .card-title { 
-            font-family: 'Cormorant Garamond', serif; 
-            font-size: 32px; 
-            font-weight: 400; 
-            margin-bottom: 22px; 
-            color: #fce6b1;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-        
-        .card-p { 
-            font-size: 14px; 
-            line-height: 1.75; 
-            margin-bottom: 18px; 
-            font-weight: 300; 
-            color: #f1ebd9; 
-        }
-        
-        .bold-p { 
-            font-weight: 500; 
-            color: #ffffff; 
-            margin-top: 25px; 
-            font-size: 15px;
-        }
+.pomegranate-ribbon{
+    width:100%;
+    height:65px;
+    background-image:url('pomegranate-pattern.png');
+    background-repeat:repeat-x;
+    background-size:auto 100%;
+}
 
-        /* КАЛЕНДАРЬ ВНУТРИ КАРТОЧКИ */
-        .inner-calendar { 
-            margin-top: 35px; 
-            border-top: 1px dashed rgba(223,186,107,0.4); 
-            padding-top: 25px; 
-        }
-        
-        .inner-calendar h4 { 
-            font-family: 'Cormorant Garamond', serif; 
-            font-size: 24px; 
-            font-weight: 400; 
-            margin-bottom: 15px; 
-            color: #fce6b1;
-            letter-spacing: 1px;
-        }
-        
-        .mini-calendar { 
-            width: 100%; 
-            font-size: 14px; 
-            border-collapse: collapse; 
-        }
-        
-        .mini-calendar th, .mini-calendar td { 
-            padding: 8px 3px; 
-            text-align: center; 
-        }
-        
-        .mini-calendar th { 
-            color: #dfba6b; 
-            font-weight: 600; 
-            font-size: 12px;
-            text-transform: uppercase;
-        }
-        
-        .mini-calendar .wk { 
-            color: rgba(254, 230, 177, 0.4); 
-        }
-        
-        /* Креативное выделение 6-го числа сердцем */
-        .active-day { 
-            color: #ffffff !important; 
-            font-weight: bold; 
-            position: relative;
-            z-index: 2;
-            display: inline-block;
-            width: 32px;
-            height: 32px;
-            line-height: 30px;
-        }
+.names-screen{
+    text-align:center;
+    padding-bottom:40px;
+    background:#fff;
+}
 
-        .active-day::before {
-            content: '♥';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 34px;
-            color: #dfba6b;
-            z-index: -1;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
-        }
+.karnay-layout-container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    margin-top:10px;
+}
 
-        .bottom-ribbon { 
-            margin-top: 40px; 
-        }
+.karnay-fluid{
+    width:46%;
+    max-width:220px;
+}
 
-        /* СТРАНИЦА 3 (ФИНАЛЬНАЯ С ТАЙМЕРОМ) - ЧИСТЫЙ БЕЛЫЙ ФОН */
-        .final-screen { 
-            padding: 40px 20px; 
-            text-align: center; 
-            background-color: #ffffff;
-            flex-grow: 1;
-        }
-        
-        .location-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: #8a1818; font-weight: 400; margin-bottom: 12px; }
-        .rest-name { font-size: 20px; font-weight: 600; color: #4a3b32; letter-spacing: 0.5px; }
-        .rest-city { font-size: 13px; color: #7a6b60; margin-top: 4px; line-height: 1.4; }
+.kl{
+    transform:rotate(6deg);
+}
 
-        .map-links-flex { display: flex; justify-content: center; margin: 25px 0 45px 0; width: 100%; }
-        
-        .flat-map-btn.yandex-only {
-            width: 100%;
-            max-width: 280px; 
-            text-decoration: none; 
-            border: 1px solid #8a1818; 
-            color: #8a1818;
-            padding: 12px; 
-            font-size: 12px; 
-            font-weight: 600; 
-            letter-spacing: 1px; 
-            border-radius: 6px;
-            background: transparent;
-            transition: all 0.3s ease;
-        }
-        .flat-map-btn.yandex-only:active { background: #8a1818; color: #ffffff; }
+.kr{
+    transform:scaleX(-1) rotate(6deg);
+}
 
-        .timer-title { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-style: italic; color: #8a1818; font-weight: 400; margin-bottom: 20px; }
-        .clean-timer { display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 25px; }
-        .t-node { text-align: center; min-width: 55px; }
-        .t-node span { font-family: 'Cormorant Garamond', serif; font-size: 44px; color: #8a1818; display: block; line-height: 1; }
-        .t-node p { font-size: 11px; color: #aba096; margin-top: 4px; }
-        .t-colon { font-family: 'Cormorant Garamond', serif; font-size: 30px; color: #8a1818; transform: translateY(-10px); }
+.script-name{
+    font-family:'Great Vibes',cursive;
+    font-size:50px;
+    color:#7b1e2b;
+}
 
-        .wait-text { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: #8a1818; margin-bottom: 25px; }
-        .footer-flower-img { width: 80px; height: auto; }
-        .studio-footer { text-align: center; font-size: 9px; letter-spacing: 2px; color: #cbd5e1; padding: 25px 0 10px 0; background-color: #ffffff; }
+.script-va{
+    display:block;
+    margin:5px 0;
+    font-size:22px;
+    font-style:italic;
+    color:#85776d;
+}
 
-        .animated-fade { animation: fIn 1.2s ease-out; }
-        @keyframes fIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.couple-silhouette-img{
+    width:230px;
+    margin-top:20px;
+}
 
-        /* АНИМАЦИЯ ПОЭТАПНОГО ПОЯВЛЕНИЯ ПЕРВОГО ЭКРАНА */
-        .fade-in-step {
-            opacity: 0;
-            transform: translateY(15px);
-            animation: stepsFadeIn 0.8s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;
-        }
-        .step-1 { animation-delay: 0.1s; }
-        .step-2 { animation-delay: 0.3s; }
-        .step-3 { animation-delay: 0.6s; }
-        .step-4 { animation-delay: 0.9s; }
-        .step-5 { animation-delay: 1.2s; }
+.scroll-indicator{
+    margin-top:40px;
+    color:#7b1e2b;
+}
 
-        @keyframes stepsFadeIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
+.arrow-down{
+    font-size:20px;
+    animation:bounce 1.5s infinite;
+}
 
-        /* ПЛАВНАЯ АНИМАЦИЯ ДЛЯ СКРОЛЛА */
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
-        }
+@keyframes bounce{
+    0%,100%{
+        transform:translateY(0);
+    }
 
-        .scroll-reveal.revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+    50%{
+        transform:translateY(6px);
+    }
+}
+
+/* CARD */
+
+.card-screen{
+    padding:25px 15px;
+}
+
+.red-text-card{
+    background:
+    radial-gradient(circle at center,rgba(123,30,43,0.5) 0%,#5d0f19 100%),
+    url('pomegranate-pattern.png');
+
+    background-size:cover,140px;
+
+    border-radius:30px;
+    padding:45px 22px;
+    color:#fff;
+    border:2px solid #dfba6b;
+    text-align:center;
+
+    box-shadow:0 15px 35px rgba(123,30,43,0.35);
+
+    position:relative;
+}
+
+.red-text-card::before{
+    content:'';
+    position:absolute;
+    inset:10px;
+    border:1px solid rgba(223,186,107,0.3);
+    border-radius:22px;
+}
+
+.card-title{
+    font-size:34px;
+    color:#fce6b1;
+    margin-bottom:22px;
+    font-family:'Cormorant Garamond',serif;
+}
+
+.card-p{
+    font-size:14px;
+    line-height:1.8;
+    color:#f5eadf;
+    margin-bottom:18px;
+}
+
+.bold-p{
+    font-weight:600;
+    color:#fff;
+}
+
+/* CALENDAR */
+
+.inner-calendar{
+    margin-top:35px;
+    padding-top:25px;
+    border-top:1px dashed rgba(223,186,107,0.4);
+}
+
+.inner-calendar h4{
+    font-size:25px;
+    color:#fce6b1;
+    margin-bottom:15px;
+    font-family:'Cormorant Garamond',serif;
+}
+
+.mini-calendar{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.mini-calendar th,
+.mini-calendar td{
+    padding:8px 3px;
+    text-align:center;
+}
+
+.mini-calendar th{
+    color:#dfba6b;
+}
+
+.wk{
+    color:rgba(255,255,255,0.4);
+}
+
+.active-day{
+    position:relative;
+    color:#fff;
+    font-weight:bold;
+    z-index:2;
+}
+
+.active-day::before{
+    content:'♥';
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:34px;
+    color:#dfba6b;
+    z-index:-1;
+}
+
+/* FINAL */
+
+.final-screen{
+    padding:40px 20px;
+    text-align:center;
+    background:#fff;
+}
+
+.location-title{
+    font-size:30px;
+    color:#7b1e2b;
+    margin-bottom:10px;
+    font-family:'Cormorant Garamond',serif;
+}
+
+.rest-name{
+    font-size:22px;
+    font-weight:600;
+}
+
+.rest-city{
+    margin-top:5px;
+    color:#777;
+    line-height:1.5;
+}
+
+.map-links-flex{
+    display:flex;
+    justify-content:center;
+    margin:30px 0 45px;
+}
+
+.flat-map-btn{
+    width:100%;
+    max-width:280px;
+
+    text-decoration:none;
+    padding:14px;
+    border-radius:50px;
+
+    color:#fff;
+
+    background:linear-gradient(135deg,#9b2c3d,#c79a53);
+
+    box-shadow:0 8px 20px rgba(155,44,61,0.3);
+
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:1px;
+}
+
+.timer-title{
+    font-size:32px;
+    color:#7b1e2b;
+    margin-bottom:20px;
+    font-family:'Cormorant Garamond',serif;
+}
+
+.clean-timer{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+}
+
+.t-node{
+    min-width:55px;
+}
+
+.t-node span{
+    font-size:46px;
+    color:#7b1e2b;
+    font-family:'Cormorant Garamond',serif;
+}
+
+.t-node p{
+    font-size:11px;
+    color:#999;
+}
+
+.t-colon{
+    font-size:28px;
+    color:#7b1e2b;
+    transform:translateY(-8px);
+}
+
+.wait-text{
+    margin:28px 0;
+    font-size:22px;
+    color:#7b1e2b;
+    font-family:'Cormorant Garamond',serif;
+}
+
+.footer-flower-img{
+    width:150px;
+    margin-top:10px;
+    animation:flowerFloat 4s ease-in-out infinite;
+}
+
+@keyframes flowerFloat{
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-8px);
+    }
+}
+
+.studio-footer{
+    text-align:center;
+    padding:25px 0 10px;
+    font-size:10px;
+    color:#ccc;
+}
+
+/* REVEAL */
+
+.scroll-reveal{
+    opacity:0;
+    transform:translateY(40px);
+    transition:1.2s;
+}
+
+.scroll-reveal.revealed{
+    opacity:1;
+    transform:translateY(0);
+}
+
+</style>
 </head>
+
 <body>
 
-    <audio id="bg-music" src="music.mp3" loop></audio>
+<audio id="bg-music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
 
-    <div class="top-controls">
-        <button id="music-toggle" class="music-icon-btn" onclick="toggleMusic()">
-            <span id="music-status-icon">🔇</span>
-        </button>
-        <div class="lang-switch">
-            <span id="lang-ru" class="lang-btn" onclick="switchLanguage('ru')">RU</span>
-            <span class="lang-divider">|</span>
-            <span id="lang-uz" class="lang-btn active" onclick="switchLanguage('uz')">UZ</span>
-        </div>
+<div class="top-controls">
+
+    <button id="music-toggle" class="music-icon-btn" onclick="toggleMusic()">
+        <span id="music-status-icon">🔇</span>
+    </button>
+
+    <div class="lang-switch">
+        <span id="lang-ru" class="lang-btn" onclick="switchLanguage('ru')">RU</span>
+        <span class="lang-divider">|</span>
+        <span id="lang-uz" class="lang-btn active" onclick="switchLanguage('uz')">UZ</span>
     </div>
 
-    <section id="welcome-card" class="envelope-screen flex-center">
-        <div class="envelope-edge-top"></div>
-        <div class="envelope-edge-bottom"></div>
-        <div class="envelope-gold-line gl-left"></div>
-        <div class="envelope-gold-line gl-right"></div>
+</div>
 
-        <div class="envelope-content-wrapper animated-fade">
-            <div class="envelope-text-top">
-                <h1 class="envelope-main-title">
-                    <span class="pre-title data-translate" data-uz="SIZ" data-ru="ВЫ">SIZ</span><br>
-                    <span class="mid-title data-translate" data-uz="TO'YIMIZGA" data-ru="приглашены">TO'YIMIZGA</span><br>
-                    <span class="highlight-title data-translate" data-uz="taklif etilgansiz" data-ru="НА НАШУ СВАДЬБУ!">taklif etilgansiz</span>
-                </h1>
-            </div>
+<!-- ENVELOPE -->
 
-            <div id="open-btn" class="wax-seal-btn" onclick="openInvitation()">
-                <div class="seal-inner-circle">
-                    <span id="seal-text" class="data-translate" data-uz="OCHISH" data-ru="ОТКРЫТЬ">OCHISH</span>
-                </div>
-            </div>
+<section id="welcome-card" class="envelope-screen flex-center">
 
-            <div class="envelope-text-bottom">
-                <p class="signature-pre data-translate" data-uz="muhabbat ila," data-ru="с любовью,">muhabbat ila,</p>
-                <p class="couple-signature data-translate" data-uz="MUHAMMADAZIZ & RUHSHONA" data-ru="МУХАММАДАЗИЗ & РУХШОНА">MUHAMMADAZIZ & RUHSHONA</p>
-            </div>
+    <div class="envelope-edge-top"></div>
+    <div class="envelope-edge-bottom"></div>
+
+    <div class="envelope-gold-line gl-left"></div>
+    <div class="envelope-gold-line gl-right"></div>
+
+    <div class="envelope-content-wrapper">
+
+        <div>
+
+            <h1>
+
+                <span class="pre-title">SIZ</span><br>
+                <span class="mid-title">TO'YIMIZGA</span><br>
+                <span class="highlight-title">taklif etilgansiz</span>
+
+            </h1>
+
         </div>
-    </section>
 
-    <section id="letter-card" class="main-content" style="display: none;">
-        <div class="main-container-wrapper">
-            
-            <div class="names-screen scroll-reveal">
-                <img src="ornament.png" class="top-full-ornament fade-in-step step-1" alt="Ornament">
-                
-                <div class="pomegranate-ribbon fade-in-step step-2"></div> 
-                
-                <div class="karnay-layout-container fade-in-step step-3">
-                    <img src="karnay-left.png" class="karnay-fluid kl" alt="Karnay Left">
-                    <img src="karnay-left.png" class="karnay-fluid kr" alt="Karnay Right">
-                </div>
-                
-                <div class="center-names fade-in-step step-3">
-                    <h2 class="script-name data-translate" data-uz="Muhammadaziz" data-ru="Мухаммадазиз">Muhammadaziz</h2>
-                    <span class="script-va data-translate" data-uz="va" data-ru="и">va</span>
-                    <h2 class="script-name data-translate" data-uz="Ruhshona" data-ru="Рухшона">Ruhshona</h2>
-                </div>
-                
-                <img src="couple.png" class="couple-silhouette-img fade-in-step step-4" alt="Couple">
+        <button id="open-btn" class="wax-seal-btn" onclick="openInvitation()">
 
-                <div class="scroll-indicator fade-in-step step-5">
-                    <p class="data-translate" data-uz="PASTGA TUSHURING" data-ru="ЛИСТАЙТЕ ВНИЗ">PASTGA TUSHURING</p>
-                    <div class="arrow-down">↓</div>
-                </div>
+            <div class="seal-inner-circle">
+                <span id="seal-text">OCHISH</span>
             </div>
 
-            <div class="card-screen scroll-reveal">
-                <div class="red-text-card">
-                    <h2 class="card-title data-translate" data-uz="Aziz va qadrdon insonimiz!" data-ru="Дорогой и близкий наш человек!">Aziz va qadrdon insonimiz!</h2>
-                    
-                    <p class="card-p data-translate" 
-                       data-uz="Hayotimizdagi eng baxtli kunlardan biri - nikoh to'yimizni siz bilan birga nishonlashni niyat qildik."
-                       data-ru="Мы хотим отпраздновать один из самых счастливых дней в нашей жизни — день нашей свадьбы — вместе с вами.">
-                        Hayotimizdagi eng baxtli kunlardan biri - nikoh to'yimizni siz bilan birga nishonlashni niyat qildik.
-                    </p>
-                    
-                    <p class="card-p data-translate" 
-                       data-uz="Sizni ushbu kechamizga samimiy taklif etamiz."
-                       data-ru="Искренне приглашаем вас на этот праздничный вечер.">
-                        Sizni ushbu kechamizga samimiy taklif etamiz.
-                    </p>
-                    
-                    <p class="card-p bold-p data-translate" 
-                       data-uz="Quvonchli kunimizda aziz mehmonimiz bo'lishingizni intizorlik bilan kutamiz."
-                       data-ru="Мы будем рады видеть вас в качестве нашего дорогого гостя в этот радостный день.">
-                        Quvonchli kunimizда aziz mehmonimiz bo'lishingizni intizorlik bilan kutamiz.
-                    </p>
+        </button>
 
-                    <div class="inner-calendar">
-                        <h4 class="data-translate" data-uz="Avgust 2026" data-ru="Август 2026">Avgust 2026</h4>
-                        <table class="mini-calendar">
-                            <thead>
-                                <tr id="calendar-weekdays">
-                                    <th>Du</th><th>Se</th><th>Ch</th><th>Pa</th><th>Ju</th><th class="wk">Sh</th><th class="wk">Ya</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr><td></td><td></td><td></td><td></td><td></td><td class="wk">1</td><td class="wk">2</td></tr>
-                                <tr><td>3</td><td>4</td><td>5</td><td class="active-day">6</td><td>7</td><td class="wk">8</td><td class="wk">9</td></tr>
-                                <tr><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td class="wk">15</td><td class="wk">16</td></tr>
-                                <tr><td>17</td><td>18</td><td>19</td><td>20</td><td>21</td><td class="wk">22</td><td class="wk">23</td></tr>
-                                <tr><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td><td class="wk">29</td><td class="wk">30</td></tr>
-                                <tr><td>31</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="pomegranate-ribbon bottom-ribbon"></div> 
-            </div>
+        <div>
 
-            <div class="final-screen scroll-reveal">
-                <h3 class="location-title data-translate" data-uz="To'y manzili" data-ru="Место проведения">To'y manzili</h3>
-                <p class="rest-name data-translate" data-uz='"NOORUZ" Restorani' data-ru='Ресторан "НАВРУЗ"'>"NOORUZ" Restorani</p>
-                <p class="rest-city data-translate" data-uz="Osh shahri, Askar Shakirov ko'chasi, 240A/1" data-ru="город Ош, улица Аскара Шакирова, 240А/1">Osh shahri, Askar Shakirov ko'chasi, 240A/1</p>
-                
-                <div class="map-links-flex">
-                    <a href="https://yandex.com.tr/maps/org/nowruz/110373152025/?ll=72.808670%2C40.530193&z=17" target="_blank" class="flat-map-btn yandex-only data-translate" data-uz="YANDEX XARITASI" data-ru="ЯНДЕКС КАРТА">YANDEX XARITASI</a>
-                </div>
+            <p class="signature-pre">muhabbat ila,</p>
+            <p class="couple-signature">MUHAMMADAZIZ & RUHSHONA</p>
 
-                <div class="countdown-section">
-                    <h3 class="timer-title data-translate" data-uz="Har lahzani sanayapmiz" data-ru="Считаем каждое мгновение">Har lahzani sanayapmiz</h3>
-                    
-                    <div id="countdown-timer" class="clean-timer">
-                        <div class="t-node"><span id="days">00</span><p class="data-translate" data-uz="Kun" data-ru="Дней">Kun</p></div>
-                        <div class="t-colon">:</div>
-                        <div class="t-node"><span id="hours">00</span><p class="data-translate" data-uz="Soat" data-ru="Часов">Soat</p></div>
-                        <div class="t-colon">:</div>
-                        <div class="t-node"><span id="minutes">00</span><p class="data-translate" data-uz="Daqiqa" data-ru="Минут">Daqiqa</p></div>
-                        <div class="t-colon">:</div>
-                        <div class="t-node"><span id="seconds">00</span><p class="data-translate" data-uz="Soniya" data-ru="Секунд">Soniya</p></div>
-                    </div>
-
-                    <p class="wait-text data-translate" data-uz="Sizni intiqlik bilan kutamiz." data-ru="Ждем вас с нетерпением.">Sizni intiqlik bilan kutamiz.</p>
-                    <img src="bottom-flower.png" class="footer-flower-img" alt="Flower">
-                </div>
-            </div>
-
-            <footer class="studio-footer data-translate" data-uz="BY @r.h_0705" data-ru="РАЗРАБОТАНО inst @r.h_0705">
-                BY @r.h_0705
-            </footer>
         </div>
-    </section>
 
-    <script>
-        let currentLang = 'uz';
+    </div>
 
-        function openInvitation() {
-            const music = document.getElementById('bg-music');
-            
-            // Включение музыки при клике на печать
-            music.play().then(() => {
-                document.getElementById('music-status-icon').innerText = "🔊";
-            }).catch(error => {
-                console.log("Воспроизведение заблокировано системой:", error);
-            });
+</section>
 
-            document.getElementById('letter-card').style.display = 'block';
-            initScrollReveal();
-            document.getElementById('letter-card').scrollIntoView({ behavior: 'smooth' });
+<!-- MAIN -->
 
-            setTimeout(() => {
-                document.getElementById('welcome-card').style.display = 'none';
-                window.scrollTo(0, 0);
-            }, 800);
+<section id="letter-card" class="main-content" style="display:none;">
+
+<div class="main-container-wrapper">
+
+<div class="names-screen scroll-reveal">
+
+<img src="ornament.png" class="top-full-ornament">
+
+<div class="pomegranate-ribbon"></div>
+
+<div class="karnay-layout-container">
+
+<img src="karnay-left.png" class="karnay-fluid kl">
+<img src="karnay-left.png" class="karnay-fluid kr">
+
+</div>
+
+<h2 class="script-name">Muhammadaziz</h2>
+
+<span class="script-va">va</span>
+
+<h2 class="script-name">Ruhshona</h2>
+
+<img src="couple.png" class="couple-silhouette-img">
+
+<div class="scroll-indicator">
+
+<p>PASTGA TUSHURING</p>
+
+<div class="arrow-down">↓</div>
+
+</div>
+
+</div>
+
+<!-- CARD -->
+
+<div class="card-screen scroll-reveal">
+
+<div class="red-text-card">
+
+<h2 class="card-title">
+Aziz va qadrdon insonimiz!
+</h2>
+
+<p class="card-p">
+Hayotimizdagi eng baxtli kunlardan biri - nikoh to'yimizni siz bilan birga nishonlashni niyat qildik.
+</p>
+
+<p class="card-p">
+Sizni ushbu kechamizga samimiy taklif etamiz.
+</p>
+
+<p class="card-p bold-p">
+Quvonchli kunimizda aziz mehmonimiz bo'lishingizni intiqlik bilan kutamiz.
+</p>
+
+<div class="inner-calendar">
+
+<h4>Avgust 2026</h4>
+
+<table class="mini-calendar">
+
+<thead>
+<tr>
+<th>Du</th>
+<th>Se</th>
+<th>Ch</th>
+<th>Pa</th>
+<th>Ju</th>
+<th class="wk">Sh</th>
+<th class="wk">Ya</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td></td><td></td><td></td><td></td><td></td>
+<td class="wk">1</td>
+<td class="wk">2</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td class="active-day">6</td>
+<td>7</td>
+<td class="wk">8</td>
+<td class="wk">9</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- FINAL -->
+
+<div class="final-screen scroll-reveal">
+
+<h3 class="location-title">To'y manzili</h3>
+
+<p class="rest-name">"NOORUZ" Restorani</p>
+
+<p class="rest-city">
+Osh shahri, Askar Shakirov ko'chasi, 240A/1
+</p>
+
+<div class="map-links-flex">
+
+<a
+href="https://yandex.com.tr/maps/org/nowruz/110373152025/?ll=72.808670%2C40.530193&z=17"
+target="_blank"
+class="flat-map-btn">
+
+YANDEX XARITASI
+
+</a>
+
+</div>
+
+<h3 class="timer-title">
+Har lahzani sanayapmiz
+</h3>
+
+<div id="countdown-timer" class="clean-timer">
+
+<div class="t-node">
+<span id="days">00</span>
+<p>Kun</p>
+</div>
+
+<div class="t-colon">:</div>
+
+<div class="t-node">
+<span id="hours">00</span>
+<p>Soat</p>
+</div>
+
+<div class="t-colon">:</div>
+
+<div class="t-node">
+<span id="minutes">00</span>
+<p>Daqiqa</p>
+</div>
+
+<div class="t-colon">:</div>
+
+<div class="t-node">
+<span id="seconds">00</span>
+<p>Soniya</p>
+</div>
+
+</div>
+
+<p class="wait-text">
+Sizni intiqlik bilan kutamiz.
+</p>
+
+<img src="bottom-flower.png" class="footer-flower-img">
+
+</div>
+
+<footer class="studio-footer">
+BY @r.h_0705
+</footer>
+
+</div>
+
+</section>
+
+<script>
+
+let currentLang='uz';
+
+async function openInvitation(){
+
+    const music=document.getElementById('bg-music');
+
+    try{
+
+        music.volume=0.7;
+
+        await music.play();
+
+        document.getElementById('music-status-icon').innerText='🔊';
+
+    }catch(err){
+
+        console.log(err);
+
+    }
+
+    document.getElementById('letter-card').style.display='block';
+
+    initScrollReveal();
+
+    document.getElementById('letter-card').scrollIntoView({
+        behavior:'smooth'
+    });
+
+    setTimeout(()=>{
+
+        document.getElementById('welcome-card').style.display='none';
+
+        window.scrollTo(0,0);
+
+    },800);
+}
+
+async function toggleMusic(){
+
+    const music=document.getElementById('bg-music');
+    const icon=document.getElementById('music-status-icon');
+
+    try{
+
+        if(music.paused){
+
+            await music.play();
+
+            icon.innerText='🔊';
+
+        }else{
+
+            music.pause();
+
+            icon.innerText='🔇';
+
         }
 
-        function toggleMusic() {
-            const music = document.getElementById('bg-music');
-            const icon = document.getElementById('music-status-icon');
-            
-            if (music.paused) {
-                music.play();
-                icon.innerText = "🔊";
-            } else {
-                music.pause();
-                icon.innerText = "🔇";
+    }catch(err){
+
+        alert('music.mp3 fayli topilmadi');
+
+    }
+}
+
+function initScrollReveal(){
+
+    const reveals=document.querySelectorAll('.scroll-reveal');
+
+    function reveal(){
+
+        const trigger=window.innerHeight*0.85;
+
+        reveals.forEach(el=>{
+
+            const top=el.getBoundingClientRect().top;
+
+            if(top<trigger){
+
+                el.classList.add('revealed');
+
             }
-        }
 
-        function switchLanguage(lang) {
-            currentLang = lang;
-            
-            document.getElementById('lang-uz').classList.toggle('active', lang === 'uz');
-            document.getElementById('lang-ru').classList.toggle('active', lang === 'ru');
-            
-            const textElements = document.querySelectorAll('.data-translate');
-            textElements.forEach(elem => {
-                elem.innerText = elem.getAttribute(`data-${lang}`);
-            });
+        });
 
-            const weekdays = document.getElementById('calendar-weekdays');
-            if (lang === 'ru') {
-                weekdays.innerHTML = '<th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th class="wk">Сб</th><th class="wk">Вс</th>';
-            } else {
-                weekdays.innerHTML = '<th>Du</th><th>Se</th><th>Ch</th><th>Pa</th><th>Ju</th><th class="wk">Sh</th><th class="wk">Ya</th>';
-            }
-        }
+    }
 
-        function initScrollReveal() {
-            const revealElements = document.querySelectorAll('.scroll-reveal');
-            
-            const revealOnScroll = () => {
-                const triggerBottom = window.innerHeight * 0.85;
-                
-                revealElements.forEach(element => {
-                    const elementTop = element.getBoundingClientRect().top;
-                    
-                    if (elementTop < triggerBottom) {
-                        element.classList.add('revealed');
-                    }
-                });
-            };
+    window.addEventListener('scroll',reveal);
 
-            window.addEventListener('scroll', revealOnScroll);
-            revealOnScroll();
-        }
+    reveal();
+}
 
-        const weddingDate = new Date("August 6, 2026 16:00:00").getTime();
+/* TIMER */
 
-        const timerInterval = setInterval(function() {
-            const now = new Date().getTime();
-            const timeLeft = weddingDate - now;
+const weddingDate=new Date("August 6, 2026 16:00:00").getTime();
 
-            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+const timer=setInterval(()=>{
 
-            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
-            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
-            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
-            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+    const now=new Date().getTime();
 
-            if (timeLeft < 0) {
-                clearInterval(timerInterval);
-                document.getElementById("countdown-timer").innerHTML = 
-                    `<p style='color:#8a1818; font-size:20px; font-family: "Cormorant Garamond", serif;'>${currentLang === 'uz' ? "To'y boshlandi!" : "Свадьба началась!"}</p>`;
-            }
-        }, 1000);
-    </script>
+    const distance=weddingDate-now;
+
+    const days=Math.floor(distance/(1000*60*60*24));
+
+    const hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+
+    const minutes=Math.floor((distance%(1000*60*60))/(1000*60));
+
+    const seconds=Math.floor((distance%(1000*60))/1000);
+
+    document.getElementById('days').innerText=days;
+    document.getElementById('hours').innerText=hours;
+    document.getElementById('minutes').innerText=minutes;
+    document.getElementById('seconds').innerText=seconds;
+
+    if(distance<0){
+
+        clearInterval(timer);
+
+        document.getElementById('countdown-timer').innerHTML=
+        "<p style='font-size:24px;color:#7b1e2b;'>To'y boshlandi!</p>";
+
+    }
+
+},1000);
+
+</script>
+
 </body>
 </html>
